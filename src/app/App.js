@@ -1,20 +1,12 @@
-import { useState } from 'react';
-import './App.css';
-import ModalFilter from '../components/modal-filter/ModalFilter';
+import MainPage from './../app/main-page/MainPage';
+import './App.scss';
+
 
 function App() {
-  const [activeModal, setActiveModal] = useState(false)
-
-  const  callbacks = {
-    setActiveModal: () => {
-      setActiveModal(true)
-    }
-  }
-
+  
   return (
     <div className="App">
-      <button onClick={callbacks.setActiveModal}></button>
-      {activeModal ? <ModalFilter/> : ''}
+      <MainPage/>
     </div>
   );
 }
