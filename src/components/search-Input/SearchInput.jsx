@@ -1,23 +1,21 @@
-import React, {useState} from 'react'
-import SearchImg from './../../assets/svg/search.svg';
-import './SearchInput.scss'
+import React, { useState } from "react";
+import SearchImg from "./../../assets/svg/search.svg";
+import "./SearchInput.scss";
 
-const SearchInput = () => {
+const SearchInput = ({ ...props }) => {
 
-    const [searchInput, setSearchInput] = useState('')
+  return (
+    <form className="searchInput">
+      <input
+        className="searchInput__input"
+        value={props.searchInput}
+        placeholder="Поиск по названию..."
+        onChange={(e) => props.setSearchInput(e.target.value.toLowerCase())}
+        type="text"
+      />
+      <img className="searchInput__btn_img" src={SearchImg} />
+    </form>
+  );
+};
 
-    return (
-        <form className='searchInput'>
-            <input
-                className='searchInput__input'
-                value={searchInput}
-                placeholder='Поиск по названию...'
-                onChange={(e) => setSearchInput(e.target.value)}
-                type='text'
-            />
-            <img className='searchInput__btn_img' src={SearchImg} />
-        </form>
-    )
-}
-
-export default SearchInput
+export default SearchInput;

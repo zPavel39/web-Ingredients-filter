@@ -12,12 +12,18 @@ const ListCheckbox = ({ ...props }) => {
             }
         }
     }
+
     return (
         <div className='checkList'>
             {props.checkList.map((i) => {
                 return (
                     <div className='checkList__item' key={i.id}>
-                        <input type='checkbox' id={i.id} name={i.name} onChange={() => callback.setSelectedCheck(i.name)} />
+                        <input
+                            type='checkbox'
+                            id={i.id}
+                            name={i.name}
+                            onChange={() => callback.setSelectedCheck(i.name)}
+                            checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
                         <label htmlFor={i.id}>{i.name}</label>
                     </div>
                 )

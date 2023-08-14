@@ -2,12 +2,12 @@
     display: block;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(6, 6, 18, 0.566);
     top: 0;
     left: 0;
     position: fixed;
     display: flex;
-    align-items: center;
+    margin: 20px 20px 0 0px;
+    align-items: flex-end;
     justify-content: center;
     flex-direction: column;
     &__content {
@@ -25,6 +25,22 @@
             text-transform: uppercase;
             font-size: 25px;
             margin-bottom: 10px;
+        }
+    }
+    &__noSearch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    &__action {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        &_btn {
+            padding: 3px 5px;
+            cursor: pointer;
         }
     }
 }
