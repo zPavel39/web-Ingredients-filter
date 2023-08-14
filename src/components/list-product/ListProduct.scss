@@ -1,0 +1,16 @@
+.listProduct {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0 15px 0;
+    &__item {
+        background: linear-gradient(to right, #979494, #4d4848);
+        &_name {
+            font-size: 20px;
+        }
+        &_descr {
+    
+        }
+    }
+    
+}
