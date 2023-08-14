@@ -15,6 +15,25 @@ const ListCheckbox = ({ ...props }) => {
 
     return (
         <div className='checkList'>
+            {props.searchCheckList.length > 0 ?
+                <div className='checkList__search'>
+                {props.searchCheckList.map((i) => {
+                    return (
+                    <div className='checkList__item' key={i.id}>
+                        <input
+                            type='checkbox'
+                            id={i.id}
+                            name={i.name}
+                            onChange={() => callback.setSelectedCheck(i.name)}
+                            checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
+                        <label htmlFor={i.id}>{i.name}</label>
+                    </div>
+                    )
+                })}
+                </div>
+                :
+                ""
+            }
             {props.checkList.map((i) => {
                 return (
                     <div className='checkList__item' key={i.id}>

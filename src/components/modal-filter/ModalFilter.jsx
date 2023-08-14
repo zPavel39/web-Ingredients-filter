@@ -7,7 +7,7 @@ import "./ModalFilter.scss";
 const ModalFilter = ({ ...props }) => {
   const [selectedCheck, setSelectedCheck] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-
+  const [searchCheckList, setSearchCheckList] = useState([])
 
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const ModalFilter = ({ ...props }) => {
       callback.searchFilter(searchInput)
     } else {
       props.setFilterList([...props.productsList])
+      setSearchCheckList([])
     }
   }, [searchInput]);
 
@@ -25,20 +26,20 @@ const ModalFilter = ({ ...props }) => {
       props.setActiveModal(false);
     }, [props.activeModal]),
 
-    //Поиск по названию
+    //Поиск по названию ингредиента
     searchFilter: useCallback((searchInput) => {
-      if (searchInput.length == 0) {
-        props.setCheckList(props.checkList);
+      if (searchInput === '') {
+        console.log('321', searchCheckList )
       }
       else {
-        props.setCheckList(props.checkList.filter(i => i == i.includes(searchInput)));
+        setSearchCheckList([...props.checkList.filter((i => i.name.includes(searchInput)))]);
       }
-      console.log('sd1', searchInput)
     }, [searchInput]),
 
     //Очистка селектов
     clearSelected: () => {
       setSelectedCheck([])
+      setSearchInput('')
       return props.setFilterList([...props.productsList])
     },
 
@@ -48,7 +49,7 @@ const ModalFilter = ({ ...props }) => {
         props.setFilterList([...props.productsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
         console.log('1', 123)
       }
-      if (selectedCheck.length == 0) {
+      if (selectedCheck.length === 0) {
         return
       }
     },
@@ -67,6 +68,7 @@ const ModalFilter = ({ ...props }) => {
             checkList={props.checkList}
             setSelectedCheck={setSelectedCheck}
             selectedCheck={selectedCheck}
+            searchCheckList={searchCheckList}
           />
           <div className="modal__action">
             <button onClick={callback.actionFilterSelected} className="modal__action_btn">Принять</button>
