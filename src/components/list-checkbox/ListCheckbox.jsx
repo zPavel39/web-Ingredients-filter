@@ -19,7 +19,7 @@ const ListCheckbox = ({ ...props }) => {
                 <div className='checkList__search'>
                 {props.searchCheckList.map((i) => {
                     return (
-                    <div className='checkList__item' key={i.id}>
+                    <div className='checkList__itemSearch' key={i.id}>
                         <input
                             type='checkbox'
                             id={i.id}
@@ -34,7 +34,9 @@ const ListCheckbox = ({ ...props }) => {
                 :
                 ""
             }
-            {props.checkList.map((i) => {
+            <div className='checkList__itemBlock'>
+            {
+            props.checkList.map((i) => {
                 return (
                     <div className='checkList__item' key={i.id}>
                         <input
@@ -47,6 +49,7 @@ const ListCheckbox = ({ ...props }) => {
                     </div>
                 )
             })}
+            </div>
         </div>
     )
 }

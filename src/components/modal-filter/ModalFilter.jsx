@@ -11,7 +11,7 @@ const ModalFilter = ({ ...props }) => {
 
 
   useEffect(() => {
-    if (searchInput.length > 0) {
+    if (searchInput.length > 1) {
       callback.searchFilter(searchInput)
     } else {
       props.setFilterList([...props.productsList])
@@ -28,12 +28,10 @@ const ModalFilter = ({ ...props }) => {
 
     //Поиск по названию ингредиента
     searchFilter: useCallback((searchInput) => {
-      if (searchInput === '') {
-        console.log('321', searchCheckList )
-      }
-      else {
+      if (searchInput.length > 1) {
         setSearchCheckList([...props.checkList.filter((i => i.name.includes(searchInput)))]);
       }
+      else return
     }, [searchInput]),
 
     //Очистка селектов
