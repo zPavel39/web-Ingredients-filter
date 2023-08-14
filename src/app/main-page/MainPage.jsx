@@ -32,6 +32,7 @@ const MainPage = () => {
           <ModalFilter
             setActiveModal={setActiveModal}
             setFilterList={setFilterList}
+            setCheckList={setCheckList}
             filterList={filterList}
             productsList={productsList}
             checkList={checkList}

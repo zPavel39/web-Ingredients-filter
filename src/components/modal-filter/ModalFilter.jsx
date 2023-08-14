@@ -28,16 +28,10 @@ const ModalFilter = ({ ...props }) => {
     //Поиск по названию
     searchFilter: useCallback((searchInput) => {
       if (searchInput.length == 0) {
-        props.setFilterList([...props.productsList]);
-      } /* if (selectedCheck.length >= 0) {
-        props.setFilterList([
-          ...props.filterList.filter((i) =>
-            i.productIsName.toLowerCase().includes(searchInput)
-          ),
-        ]);
-      } */
+        props.setCheckList(props.checkList);
+      }
       else {
-        props.setFilterList([...props.productsList.filter(i => i.ingredientInfo.find(i => i.name.includes(searchInput)))]);
+        props.setCheckList(props.checkList.filter(i => i == i.includes(searchInput)));
       }
       console.log('sd1', searchInput)
     }, [searchInput]),
