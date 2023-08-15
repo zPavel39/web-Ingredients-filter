@@ -881,7 +881,7 @@ const productsDB = [
     ingredientInfo: [
       {
         weight: "500.000",
-        name: "без игридиента",
+        name: "жир",
         unit: {
           id: 1,
           name: "кг",

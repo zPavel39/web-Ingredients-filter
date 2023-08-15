@@ -6,23 +6,21 @@ import './PriceSlider.scss'
 
 const PriceSlider = ({ ...props }) => {
 
-  const [value, setValue] = React.useState([props.minPrice, props.maxPrice]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-    props.setPriceRangeValue(value)
-    console.log('range', props.priceRangeValue)
-  };
+  const callback = {
+    setPriceRangeValue: (event, newValue) => {
+      props.setPriceRangeValue(newValue)
+    }
+  }
 
   return (
     <Box sx={{ width: 300 }}>
       <Slider
         getAriaLabel={() => 'Temperature range'}
-        value={value}
+        value={props.priceRangeValue}
         min={props.minPrice}
         max={props.maxPrice}
         step={10}
-        onChange={handleChange}
+        onChange={callback.setPriceRangeValue}
         valueLabelDisplay="auto"
       />
     </Box>
