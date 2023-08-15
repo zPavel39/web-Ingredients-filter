@@ -21,6 +21,7 @@ const ModalFilter = ({ ...props }) => {
     }
   }, [searchInput]);
 
+
   const callback = {
     //Закрытие модалки
     setActiveModal: () => {
@@ -35,13 +36,8 @@ const ModalFilter = ({ ...props }) => {
       else return
     },
     //Фильтр Диапазона
-    filterRange: (min, max) => {
-      props.setFilterList([...props.productsList.filter(i => i.price <= max && min >= i.price)])
-    },
-
     //Очистка селектов
     clearSelected: () => {
-      props.getPriceRange()
       setSelectedCheck([])
       setSearchInput('')
       setPriceRangeValue([props.minPrice, props.maxPrice])
@@ -51,19 +47,19 @@ const ModalFilter = ({ ...props }) => {
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-
-      callback.filterRange(priceRangeValue[0], priceRangeValue[1])
+      props.getPriceRange()
+      console.log('priceRangeValue', priceRangeValue)
+      props.setFilterList([...props.filterList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
       console.log(props.filterList);
-
-      /* if (selectedCheck.length > 0) {
-
-        props.setFilterList([...props.filterList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+      if (selectedCheck.length > 0) {
         console.log(props.filterList);
-
+        props.setFilterList([...props.productsList.filter(i => i.price <= priceRangeValue[1] && priceRangeValue[0] <= i.price)])g
+        console.log(props.filterList);
       } else {
+        /* props.setFilterList([...props.productsList.filter(i => i.price <= priceRangeValue[1] && priceRangeValue[0] <= i.price)]) */
         props.setFilterList([])
-      } */
-    }
+      }
+    },
   };
 
   return (
