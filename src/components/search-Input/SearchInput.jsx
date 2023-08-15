@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchImg from "./../../assets/svg/search.svg";
 import "./SearchInput.scss";
 
 const SearchInput = ({ ...props }) => {
-
   return (
     <form className="searchInput">
       <input

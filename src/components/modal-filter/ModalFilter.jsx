@@ -3,61 +3,79 @@ import SearchInput from "../search-Input/SearchInput";
 import ListCheckbox from "../list-checkbox/ListCheckbox";
 
 import "./ModalFilter.scss";
+import PriceSlider from "../price-slider/PriceSlider";
 
 const ModalFilter = ({ ...props }) => {
   const [selectedCheck, setSelectedCheck] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchCheckList, setSearchCheckList] = useState([])
+  const [priceRangeValue, setPriceRangeValue] = useState([props.minPrice, props.maxPrice])
 
 
   useEffect(() => {
     if (searchInput.length > 1) {
       callback.searchFilter(searchInput)
     } else {
-      props.setFilterList([...props.productsList])
       setSearchCheckList([])
+      /* callback.rangePriceFilter(props.minPrice, props.maxPrice) */
     }
   }, [searchInput]);
 
-
   const callback = {
-    //закрытие модалки
-    setActiveModal: useCallback(() => {
+    //Закрытие модалки
+    setActiveModal: () => {
       props.setActiveModal(false);
-    }, [props.activeModal]),
+    },
 
     //Поиск по названию ингредиента
-    searchFilter: useCallback((searchInput) => {
+    searchFilter: (searchInput) => {
       if (searchInput.length > 1) {
         setSearchCheckList([...props.checkList.filter((i => i.name.includes(searchInput)))]);
       }
       else return
-    }, [searchInput]),
+    },
+    //Фильтр Диапазона
+    filterRange: (min, max) => {
+      props.setFilterList([...props.productsList.filter(i => i.price <= max && min >= i.price)])
+    },
 
     //Очистка селектов
     clearSelected: () => {
+      props.getPriceRange()
       setSelectedCheck([])
       setSearchInput('')
-      return props.setFilterList([...props.productsList])
+      setPriceRangeValue([props.minPrice, props.maxPrice])
+      props.setFilterList([...props.productsList])
+      console.log('sss', priceRangeValue)
     },
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-      if (selectedCheck.length > 0) {
-        props.setFilterList([...props.productsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
-        console.log('1', 123)
-      }
-      if (selectedCheck.length === 0) {
-        return
-      }
-    },
+
+      callback.filterRange(priceRangeValue[0], priceRangeValue[1])
+      console.log(props.filterList);
+
+      /* if (selectedCheck.length > 0) {
+
+        props.setFilterList([...props.filterList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+        console.log(props.filterList);
+
+      } else {
+        props.setFilterList([])
+      } */
+    }
   };
 
   return (
     <div className="modal" onClick={callback.setActiveModal}>
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="modal__option">
-          <h2 className="modal__option_title">Ингредиенты</h2>
+          <div className="modal__header">
+            <h2 className="modal__header_title">Ингредиенты</h2>
+            <button className="modal__header_btn" onClick={callback.setActiveModal}>
+              Закрыть
+            </button>
+          </div>
           <SearchInput
             searchInput={searchInput}
             setSearchInput={setSearchInput}
@@ -67,6 +85,16 @@ const ModalFilter = ({ ...props }) => {
             setSelectedCheck={setSelectedCheck}
             selectedCheck={selectedCheck}
             searchCheckList={searchCheckList}
+            filterList={props.filterList}
+          />
+          <PriceSlider
+            minPrice={props.minPrice}
+            maxPrice={props.maxPrice}
+            setMinPrice={props.setMinPrice}
+            setMaxPrice={props.setMaxPrice}
+            setPriceRangeValue={setPriceRangeValue}
+            priceRangeValue={priceRangeValue}
+            clearSelected={callback.clearSelected}
           />
           <div className="modal__action">
             <button onClick={callback.actionFilterSelected} className="modal__action_btn">Принять</button>

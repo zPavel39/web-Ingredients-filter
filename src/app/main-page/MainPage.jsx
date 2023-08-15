@@ -11,6 +11,9 @@ const MainPage = () => {
   const [filterList, setFilterList] = useState([]);
   const [productsList, setProductsList] = useState([]);
   const [checkList, setCheckList] = useState([]);
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(0)
+
 
 
   useEffect(() => {
@@ -19,9 +22,20 @@ const MainPage = () => {
   }, []);
 
   const callbacks = {
+    //Открытие модального окна
     setActiveModal: () => {
       setActiveModal(true)
-    }
+      setFilterList([...productsList])
+      callbacks.getPriceRange()
+    },
+    //Получение Мин, Макс занчения цены товаров
+    getPriceRange: () => {
+      let productListSort = productsList
+      setMinPrice(productListSort.sort((a, b) => a.price - b.price)[0].price)
+      setMaxPrice(productListSort.sort((a, b) => b.price - a.price)[0].price)
+      console.log('mi', minPrice)
+      console.log('max', maxPrice)
+    },
   }
 
   return (
@@ -36,6 +50,11 @@ const MainPage = () => {
             filterList={filterList}
             productsList={productsList}
             checkList={checkList}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            setMinPrice={setMinPrice}
+            setMaxPrice={setMaxPrice}
+            getPriceRange={callbacks.getPriceRange}
           /> : ''}
       </div>
       <div>

@@ -19,11 +19,7 @@
         margin: 25px 15px;
     }
     &__option {
-        &_title {
-            text-transform: uppercase;
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
+        
     }
     &__noSearch {
         display: flex;
@@ -39,6 +35,22 @@
         &_btn {
             padding: 3px 5px;
             cursor: pointer;
+        }
+    }
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        &_title {
+            text-transform: uppercase;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+        &_btn {
+            font-size: 18px;
+            background-color: inherit;
+            cursor: pointer;
+            color: white;
         }
     }
 }
