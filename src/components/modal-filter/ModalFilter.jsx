@@ -51,17 +51,46 @@ const ModalFilter = ({ ...props }) => {
       props.setFilterList([...props.productsList])
     },
 
+    // Фильтр по ингредиентам
+    filterIngredient: () => {
+      let date = filterRangeProductsList.filter(item => item.ingredientInfo.filter(i => i.ingredient.find(i => selectedCheck.includes(i.name))))
+      console.log('d', date)
+    },
+
+
+    /* filterIngredient: (products, ingredient) => {
+      if (!ingredient) {
+        return false;
+      }
+      for (var i = 0; i < ingredient.length; i++) {
+        for (var j = 0; j < products.length; j++) {
+          if (ingredient[i] == products[j]) {
+            break;
+          }
+          if (j === products.length - 1) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }, */
+
     //Применить фильтрацию
     actionFilterSelected: () => {
-      props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+      /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))]) */
       if (selectedCheck.length > 0) {
-        props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+        callback.filterIngredient()
+        /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.filter(i => selectedCheck.every(item => i.ingredient.includes(item))))]) */
+        /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => item == i.ingredient.name)))] */
+
+        console.log('Fill', filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => callback.filterIngredient(i.ingredient.name, item)))))
+
       } else {
         return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
       }
     },
   };
-
+  console.log('sd', callback.filterIngredient(filterRangeProductsList.filter(i => i.ingredientInfo.find(i => i.ingredient)), selectedCheck))
   return (
     <div className="modal">
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>

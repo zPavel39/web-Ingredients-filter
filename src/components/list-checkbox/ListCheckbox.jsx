@@ -5,7 +5,7 @@ const ListCheckbox = ({ ...props }) => {
 
     const callback = {
         setSelectedCheck: (selected) => {
-            if (props.selectedCheck.find(item => item === selected)) {
+            if (props.selectedCheck.find(item => item.name === selected)) {
                 props.setSelectedCheck([...props.selectedCheck.filter(item => item !== selected)])
             } else {
                 props.setSelectedCheck([...props.selectedCheck, selected])
@@ -29,7 +29,7 @@ const ListCheckbox = ({ ...props }) => {
                                         type='checkbox'
                                         id={i.id}
                                         name={i.name}
-                                        onChange={() => callback.setSelectedCheck(i.name)}
+                                        onChange={() => callback.setSelectedCheck(i.name, i.id)}
                                         checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
                                     <label htmlFor={i.id}>{i.name}</label>
                                 </div>
@@ -46,7 +46,7 @@ const ListCheckbox = ({ ...props }) => {
                                             type='checkbox'
                                             id={i.id}
                                             name={i.name}
-                                            onChange={() => callback.setSelectedCheck(i.name)}
+                                            onChange={() => callback.setSelectedCheck(i.name, i.id)}
                                             checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
                                         <label htmlFor={i.id}>{i.name}</label>
                                     </div>
