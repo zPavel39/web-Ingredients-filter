@@ -34,14 +34,13 @@ const MainPage = () => {
       setFilterList([...productsList])
       callbacks.getPriceRange()
     },
+
     //Получение Мин, Макс занчения цены товаров
     getPriceRange: () => {
       let productListSort = productsList
       setMinPrice(productListSort.sort((a, b) => a.price - b.price)[0].price)
       setMaxPrice(productListSort.sort((a, b) => b.price - a.price)[0].price)
       setPriceRangeValue([minPrice, maxPrice])
-      console.log('mi', minPrice)
-      console.log('max', maxPrice)
     },
   }
 
@@ -64,7 +63,6 @@ const MainPage = () => {
             getPriceRange={callbacks.getPriceRange}
             priceRangeValue={priceRangeValue}
             setPriceRangeValue={setPriceRangeValue}
-
           /> : ''}
       </div>
       <div>

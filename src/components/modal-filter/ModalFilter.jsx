@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchInput from "../search-Input/SearchInput";
 import ListCheckbox from "../list-checkbox/ListCheckbox";
 import PriceSlider from "../price-slider/PriceSlider";
@@ -8,7 +8,7 @@ const ModalFilter = ({ ...props }) => {
   const [selectedCheck, setSelectedCheck] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchCheckList, setSearchCheckList] = useState([])
-  const [filterIngredientsList, setFilterIngredientsList] = useState([])
+  const [filterRangeProductsList, setFilterRangeProductsList] = useState([])
 
   useEffect(() => {
     if (searchInput.length > 1) {
@@ -21,6 +21,7 @@ const ModalFilter = ({ ...props }) => {
   useEffect(() => {
     callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
   }, [props.priceRangeValue])
+
 
   const callback = {
     //Закрытие модального окна
@@ -38,13 +39,13 @@ const ModalFilter = ({ ...props }) => {
 
     //Изменение Диапазона
     filterRange: (min, max) => {
-      setFilterIngredientsList([...props.productsList.filter(i => i.price <= max && min <= i.price)])
+      setFilterRangeProductsList([...props.productsList.filter(i => i.price <= max && min <= i.price)])
     },
 
     //Сброс полей
     clearSelected: () => {
       setSelectedCheck([])
-      setFilterIngredientsList([])
+      setFilterRangeProductsList([])
       setSearchInput('')
       props.setPriceRangeValue([props.minPrice, props.maxPrice])
       props.setFilterList([...props.productsList])
@@ -52,9 +53,9 @@ const ModalFilter = ({ ...props }) => {
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-      props.setFilterList([...filterIngredientsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+      props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
       if (selectedCheck.length > 0) {
-        props.setFilterList([...filterIngredientsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
+        props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))])
       } else {
         return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
       }
