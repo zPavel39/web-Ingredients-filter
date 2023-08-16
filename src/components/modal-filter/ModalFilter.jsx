@@ -82,6 +82,7 @@ const ModalFilter = ({ ...props }) => {
             selectedCheck={selectedCheck}
             searchCheckList={searchCheckList}
             filterList={props.filterList}
+            searchInput={searchInput}
           />
           <PriceSlider
             minPrice={props.minPrice}

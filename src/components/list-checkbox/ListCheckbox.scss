@@ -2,27 +2,38 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
     &__item {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 7px;
     }
+
     &__search {
-        border-bottom: 2px solid white;
         margin-bottom: 7px;
     }
+
     &__itemSearch {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 7px;
     }
+
     &__itemBlock {
         position: relative;
         width: 100%;
         height: 126px;
-        overflow-y:scroll;
+        overflow-y: scroll;
         margin-bottom: 10px;
+    }
+
+    &__noSearch {
+        margin-bottom: 10px;
+
+        &_title {
+            text-align: center;
+        }
     }
 }
