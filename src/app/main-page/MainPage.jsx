@@ -10,13 +10,13 @@ const MainPage = () => {
   const [activeModal, setActiveModal] = useState(false)
   const [filterList, setFilterList] = useState([]);
   const [productsList, setProductsList] = useState([]);
-  const [checkList, setCheckList] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState([]);
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(0)
   const [priceRangeValue, setPriceRangeValue] = useState([0, 0])
 
   useEffect(() => {
-    setCheckList(getAllIngredients());
+    setIngredientsList(getAllIngredients());
     setProductsList(getAllProducts());
   }, []);
 
@@ -53,10 +53,10 @@ const MainPage = () => {
           <ModalFilter
             setActiveModal={setActiveModal}
             setFilterList={setFilterList}
-            setCheckList={setCheckList}
+            setIngredientsList={setIngredientsList}
             filterList={filterList}
             productsList={productsList}
-            checkList={checkList}
+            ingredientsList={ingredientsList}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}
@@ -64,7 +64,7 @@ const MainPage = () => {
             getPriceRange={callbacks.getPriceRange}
             priceRangeValue={priceRangeValue}
             setPriceRangeValue={setPriceRangeValue}
-            
+
           /> : ''}
       </div>
       <div>

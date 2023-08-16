@@ -15,7 +15,7 @@ const ListCheckbox = ({ ...props }) => {
 
     return (
         <div className='checkList'>
-            {props.searchCheckList.length > 0 && props.filterList.length > 0 ?
+            {props.searchCheckList.length > 0 ?
                 <div className='checkList__search'>
                     {props.searchCheckList.map((i) => {
                         return (
@@ -36,7 +36,7 @@ const ListCheckbox = ({ ...props }) => {
             }
             <div className='checkList__itemBlock'>
                 {
-                    props.checkList.map((i) => {
+                    props.ingredientsList.map((i) => {
                         return (
                             <div className='checkList__item' key={i.id}>
                                 <input
