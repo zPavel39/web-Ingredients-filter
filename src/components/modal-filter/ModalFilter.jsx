@@ -31,7 +31,7 @@ const ModalFilter = ({ ...props }) => {
 
     //Поиск по названию ингредиента
     searchFilter: (searchInput) => {
-      if (searchInput.length > 1) {
+      if (searchInput.length > 0) {
         setSearchCheckList([...props.ingredientsList.filter((i => i.name.includes(searchInput)))]);
       }
       else return
@@ -84,14 +84,12 @@ const ModalFilter = ({ ...props }) => {
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-      props.setFilterList([])
       if (selectedCheck.length > 0) {
         callback.filterIngredient()
         /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => item == i.ingredient.name)))] */
       } else {
         return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
       }
-      console.log('1',)
     },
   };
   /* console.log('Check', selectedCheck) */
