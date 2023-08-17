@@ -115,15 +115,17 @@ const ModalFilter = ({ ...props }) => {
             filterList={props.filterList}
             searchInput={searchInput}
           />
-          <PriceSlider
-            minPrice={props.minPrice}
-            maxPrice={props.maxPrice}
-            setMinPrice={props.setMinPrice}
-            setMaxPrice={props.setMaxPrice}
-            setPriceRangeValue={props.setPriceRangeValue}
-            priceRangeValue={props.priceRangeValue}
-            clearSelected={callback.clearSelected}
-          />
+          {props.withPrice &&
+            <PriceSlider
+              minPrice={props.minPrice}
+              maxPrice={props.maxPrice}
+              setMinPrice={props.setMinPrice}
+              setMaxPrice={props.setMaxPrice}
+              setPriceRangeValue={props.setPriceRangeValue}
+              priceRangeValue={props.priceRangeValue}
+              clearSelected={callback.clearSelected}
+            />
+          }
           <div className="modal__action">
             <button onClick={callback.actionFilterSelected} className="modal__action_btn">Принять</button>
             <button onClick={callback.clearSelected} className="modal__action_btn">Сбросить</button>

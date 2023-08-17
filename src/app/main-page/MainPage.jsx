@@ -49,6 +49,7 @@ const MainPage = () => {
         <button className='mainPage__button' onClick={callbacks.setActiveModal}>Фильтр</button>
         {activeModal ?
           <ModalFilter
+            withPrice={false}
             setActiveModal={setActiveModal}
             setFilterList={setFilterList}
             setIngredientsList={setIngredientsList}
