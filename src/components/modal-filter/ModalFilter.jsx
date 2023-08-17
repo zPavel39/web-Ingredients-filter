@@ -88,7 +88,7 @@ const ModalFilter = ({ ...props }) => {
         callback.filterIngredient()
         /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => item == i.ingredient.name)))] */
       } else {
-        return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
+        return props.setFilterList([...filterRangeProductsList])
       }
     },
   };
