@@ -8,11 +8,11 @@ const ListCheckbox = ({ ...props }) => {
             if (props.selectedCheck.find(item => item === selected)) {
                 props.setSelectedCheck([...props.selectedCheck.filter(item => item !== selected)])
             } else {
-                props.setSelectedCheck([...props.selectedCheck, selected])
+                props.setSelectedCheck([...props.selectedCheck, String(selected)])
             }
         }
-
     }
+    console.log('check', props.selectedCheck)
 
     return (
         <div className='checkList'>
@@ -31,7 +31,7 @@ const ListCheckbox = ({ ...props }) => {
                                         id={i.id}
                                         name={i.name}
                                         onChange={() => callback.setSelectedCheck(i.id)}
-                                        checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
+                                        checked={props.selectedCheck.filter(item => item == i.id) == i.id ? true : false} />
                                     <label htmlFor={i.id}>{i.name}</label>
                                 </div>
                             )
@@ -47,8 +47,8 @@ const ListCheckbox = ({ ...props }) => {
                                             type='checkbox'
                                             id={i.id}
                                             name={i.name}
-                                            onChange={() => callback.setSelectedCheck(i.name)}
-                                            checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
+                                            onChange={() => callback.setSelectedCheck(i.id)}
+                                            checked={props.selectedCheck.filter(item => item == i.id) == i.id ? true : false} />
                                         <label htmlFor={i.id}>{i.name}</label>
                                     </div>
                                 )

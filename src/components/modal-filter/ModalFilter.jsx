@@ -64,14 +64,15 @@ const ModalFilter = ({ ...props }) => {
       if (matchingIndices.length > 0) {
         matchingIndices = []
       }
+      console.log('desiredIngredients', selectedCheck)
+
       // Проходимся по каждому элементу в исходном массиве
       for (let i = 0; i < data.length; i++) {
         const item = data[i];
         const ingredientInfo = item.ingredientInfo || [];
-
         // Создаем массив ингредиентов для текущего ingredientInfo
-        const ingredients = ingredientInfo.map(ingredient => ingredient.name.toLowerCase());
-
+        const ingredients = ingredientInfo.map(ingredient => toString(ingredient.id));
+        console.log('ingredients', ingredients)
         // Проверяем, содержатся ли все искомые ингредиенты в текущем ingredientInfo
         if (desiredIngredients.every(ingredient => ingredients.includes(ingredient))) {
           matchingIndices.push(data[i]);
@@ -79,7 +80,7 @@ const ModalFilter = ({ ...props }) => {
       }
       props.setFilterList([...matchingIndices])
       // Выводим индексы элементов, удовлетворяющих условию
-      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices); */
+      console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices);
     },
 
     //Применить фильтрацию
