@@ -53,23 +53,41 @@ const ModalFilter = ({ ...props }) => {
 
     // Фильтр по ингредиентам
     filterIngredient: () => {
-      
-      let date = filterRangeProductsList.filter(i => i.ingredientInfo.filter((q, r) => selectedCheck.every(item => q.name.includes(item))))
-      
-      
-      /* filterRangeProductsList.filter(item => item.ingredientInfo.filter(i => Object.keys[i].filter(i => selectedCheck.filter(item => i.name.includes(item))))) */
-      console.log('d', date)
+      // Исходный массив данных
+      const data = filterRangeProductsList
+
+      // Искомые ингредиенты
+      const desiredIngredients = selectedCheck;
+
+      // Пустой массив для хранения индексов элементов, содержащих искомые ингредиенты
+      const matchingIndices = [];
+      if (matchingIndices.length > 0) {
+        matchingIndices = []
+      }
+      // Проходимся по каждому элементу в исходном массиве
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        const ingredientInfo = item.ingredientInfo || [];
+
+        // Создаем массив ингредиентов для текущего ingredientInfo
+        const ingredients = ingredientInfo.map(ingredient => ingredient.name.toLowerCase());
+
+        // Проверяем, содержатся ли все искомые ингредиенты в текущем ingredientInfo
+        if (desiredIngredients.every(ingredient => ingredients.includes(ingredient))) {
+          matchingIndices.push(data[i]);
+        }
+      }
+      props.setFilterList([...matchingIndices])
+
+      // Выводим индексы элементов, удовлетворяющих условию
+      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices); */
     },
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-      /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => i.name.includes(item))))]) */
       if (selectedCheck.length > 0) {
         callback.filterIngredient()
-        /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.filter(i => selectedCheck.every(item => i.ingredient.includes(item))))]) */
         /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => item == i.ingredient.name)))] */
-        
-
       } else {
         return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
       }
