@@ -43,7 +43,6 @@ const MainPage = () => {
       setPriceRangeValue([minPrice, maxPrice])
     },
   }
-
   return (
     <div className="mainPage">
       <div className='mainPage__container'>

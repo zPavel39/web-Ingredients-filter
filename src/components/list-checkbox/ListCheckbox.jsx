@@ -11,6 +11,7 @@ const ListCheckbox = ({ ...props }) => {
                 props.setSelectedCheck([...props.selectedCheck, selected])
             }
         }
+
     }
 
     return (
