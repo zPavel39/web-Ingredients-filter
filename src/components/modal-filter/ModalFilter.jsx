@@ -78,19 +78,20 @@ const ModalFilter = ({ ...props }) => {
         }
       }
       props.setFilterList([...matchingIndices])
-
       // Выводим индексы элементов, удовлетворяющих условию
       /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices); */
     },
 
     //Применить фильтрацию
     actionFilterSelected: () => {
+      props.setFilterList([])
       if (selectedCheck.length > 0) {
         callback.filterIngredient()
         /* props.setFilterList([...filterRangeProductsList.filter(i => i.ingredientInfo.find(i => selectedCheck.every(item => item == i.ingredient.name)))] */
       } else {
         return callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
       }
+      console.log('1',)
     },
   };
   /* console.log('Check', selectedCheck) */
