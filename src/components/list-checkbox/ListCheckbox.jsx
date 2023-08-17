@@ -30,7 +30,7 @@ const ListCheckbox = ({ ...props }) => {
                                         type='checkbox'
                                         id={i.id}
                                         name={i.name}
-                                        onChange={() => callback.setSelectedCheck(i.name)}
+                                        onChange={() => callback.setSelectedCheck(i.id)}
                                         checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
                                     <label htmlFor={i.id}>{i.name}</label>
                                 </div>
