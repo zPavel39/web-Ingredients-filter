@@ -4,12 +4,14 @@ import ListProduct from '../../components/list-product/ListProduct';
 import { getAllIngredients } from '../../api/ingredients';
 import { getAllProducts } from '../../api/product';
 import './MainPage.scss'
+import { getAllBlank } from '../../api/blank';
 
 
 const MainPage = () => {
   const [activeModal, setActiveModal] = useState(false)
   const [filterList, setFilterList] = useState([]);
   const [productsList, setProductsList] = useState([]);
+  const [blankList, setBlankList] = useState([]);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(0)
@@ -18,6 +20,7 @@ const MainPage = () => {
   useEffect(() => {
     setIngredientsList(getAllIngredients());
     setProductsList(getAllProducts());
+    setBlankList(getAllBlank());
   }, []);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const MainPage = () => {
         <button className='mainPage__button' onClick={callbacks.setActiveModal}>Фильтр</button>
         {activeModal ?
           <ModalFilter
-            withPrice={false}
+            withPrice={true}
             setActiveModal={setActiveModal}
             setFilterList={setFilterList}
             setIngredientsList={setIngredientsList}
@@ -63,10 +66,11 @@ const MainPage = () => {
             getPriceRange={callbacks.getPriceRange}
             priceRangeValue={priceRangeValue}
             setPriceRangeValue={setPriceRangeValue}
+            blankList={blankList}
           /> : ''}
-      </div>
-      <div>
-        <ListProduct filterList={filterList} />
+        <div>
+          <ListProduct filterList={filterList} />
+        </div>
       </div>
     </div>
   )

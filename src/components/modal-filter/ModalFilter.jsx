@@ -6,9 +6,13 @@ import "./ModalFilter.scss";
 
 const ModalFilter = ({ ...props }) => {
   const [selectedCheck, setSelectedCheck] = useState([]);
+  const [selectedBlank, setSelectedBlank] = useState([])
   const [searchInput, setSearchInput] = useState("");
   const [searchCheckList, setSearchCheckList] = useState([])
   const [filterRangeProductsList, setFilterRangeProductsList] = useState([])
+  const [activeIngredients, setActiveIngredients] = useState(false)
+  const [activeBlank, setActiveBlank] = useState(false)
+
 
   useEffect(() => {
     if (searchInput.length > 1) {
@@ -21,7 +25,6 @@ const ModalFilter = ({ ...props }) => {
   useEffect(() => {
     callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
   }, [props.priceRangeValue])
-
 
   const callback = {
     //Закрытие модального окна
@@ -44,6 +47,7 @@ const ModalFilter = ({ ...props }) => {
 
     //Сброс полей
     clearSelected: () => {
+      setSelectedBlank([])
       setSelectedCheck([])
       setFilterRangeProductsList([])
       setSearchInput('')
@@ -57,8 +61,10 @@ const ModalFilter = ({ ...props }) => {
       const data = filterRangeProductsList
       // Искомые ингредиенты
       const desiredIngredients = selectedCheck;
+      console.log('ingre', selectedCheck)
+
       // Пустой массив для хранения индексов элементов, содержащих искомые ингредиенты
-      const matchingIndices = [];
+      let matchingIndices = [];
       if (matchingIndices.length > 0) {
         matchingIndices = []
       }
@@ -69,24 +75,67 @@ const ModalFilter = ({ ...props }) => {
         const ingredientInfo = item.ingredientInfo || [];
         // Создаем массив ингредиентов для текущего ingredientInfo
         const ingredients = ingredientInfo.map(ingredient => ingredient.name);
-        console.log('ingredients', ingredients)
         // Проверяем, содержатся ли все искомые ингредиенты в текущем ingredientInfo
         if (desiredIngredients.every(ingredient => ingredients.includes(ingredient))) {
           matchingIndices.push(data[i]);
         }
       }
       props.setFilterList([...matchingIndices])
+    },
+
+
+    // Фильтр по загатовкам
+    filterBlank: (list) => {
+      // Исходный массив данных
+      const data = list
+      // Искомые ингредиенты
+      const desiredIngredients = selectedBlank;
+      console.log('blank', selectedBlank)
+      // Пустой массив для хранения индексов элементов, содержащих искомые ингредиенты
+      const matchingIndices = [];
+      if (matchingIndices.length > 0) {
+        matchingIndices = []
+      }
       // Выводим индексы элементов, удовлетворяющих условию
-      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices); */
+      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices);
+      console.log('desiredIngredients', selectedBlank) */
+      // Проходимся по каждому элементу в исходном массиве
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        const blankInfo = item.blankInfo || [];
+        // Создаем массив ингредиентов для текущего ingredientInfo
+        const blanks = blankInfo.map(blank => blank.name);
+        // Проверяем, содержатся ли все искомые ингредиенты в текущем ingredientInfo
+        if (desiredIngredients.every(blank => blanks.includes(blank))) {
+          matchingIndices.push(data[i]);
+        }
+      }
+      props.setFilterList([...matchingIndices])
     },
 
     //Применить фильтрацию
     actionFilterSelected: () => {
       if (selectedCheck.length > 0) {
         callback.filterIngredient()
-      } else {
-        return props.setFilterList([...filterRangeProductsList])
+        if (selectedBlank.length > 0 && props.filterList !== props.productsList) {
+          callback.filterBlank(props.filterList)
+        } else return
       }
+      if (selectedCheck.length === 0 && selectedBlank.length > 0) {
+        callback.filterBlank(filterRangeProductsList)
+      } else {
+        return
+      }
+
+      /* if (selectedCheck.length > 0 && selectedBlank.length > 0) {
+        callback.actionAllFilter(callback.filterIngredient(), callback.filterBlank(props.filterList))
+        callback.filterIngredient()
+        callback.filterBlank(props.filterList)
+      } */
+    },
+    //Открытие/закрытие списка
+    actionToggle: (setCategory, category) => {
+      setCategory(!category)
     },
   };
   /* console.log('Check', selectedCheck) */
@@ -95,23 +144,53 @@ const ModalFilter = ({ ...props }) => {
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="modal__option">
           <div className="modal__header">
-            <h2 className="modal__header_title">Ингредиенты</h2>
+            <h2 className="modal__header_title">Фильтр</h2>
             <button className="modal__header_btn" onClick={callback.setActiveModal}>
               Закрыть
             </button>
           </div>
-          <SearchInput
-            searchInput={searchInput}
-            setSearchInput={setSearchInput}
-          />
-          <ListCheckbox
-            ingredientsList={props.ingredientsList}
-            setSelectedCheck={setSelectedCheck}
-            selectedCheck={selectedCheck}
-            searchCheckList={searchCheckList}
-            filterList={props.filterList}
-            searchInput={searchInput}
-          />
+          <div className="modal__header">
+            <button className="modal__header_btn" onClick={() => setActiveIngredients(!activeIngredients)}>
+              Ингредиенты
+            </button>
+            <button className="modal__header_btn" onClick={() => setActiveBlank(!activeBlank)}>
+              Заготовки
+            </button>
+          </div>
+          <div className="modal__checkBlock">
+            {activeIngredients ?
+              <div className="modal__filter">
+                <SearchInput
+                  searchInput={searchInput}
+                  setSearchInput={setSearchInput}
+                />
+                <ListCheckbox
+                  ingredientsList={props.ingredientsList}
+                  setSelectedCheck={setSelectedCheck}
+                  selectedCheck={selectedCheck}
+                  searchCheckList={searchCheckList}
+                  searchInput={searchInput}
+                />
+              </div>
+              :
+              ''}
+            {activeBlank ?
+              <div className="modal__filter">
+                <SearchInput
+                  searchInput={searchInput}
+                  setSearchInput={setSearchInput}
+                />
+                <ListCheckbox
+                  ingredientsList={props.blankList}
+                  setSelectedCheck={setSelectedBlank}
+                  selectedCheck={selectedBlank}
+                  searchCheckList={searchCheckList}
+                  searchInput={searchInput}
+                />
+              </div>
+              :
+              ''}
+          </div>
           {props.withPrice &&
             <PriceSlider
               minPrice={props.minPrice}
