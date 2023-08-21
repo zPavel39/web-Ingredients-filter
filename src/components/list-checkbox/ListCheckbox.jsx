@@ -12,7 +12,7 @@ const ListCheckbox = ({ ...props }) => {
             }
         }
     }
-    console.log('check', props.selectedCheck)
+    /* console.log('check', props.selectedCheck) */
 
     return (
         <div className='checkList'>

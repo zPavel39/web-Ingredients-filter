@@ -12,7 +12,7 @@ const ModalFilter = ({ ...props }) => {
   const [filterRangeProductsList, setFilterRangeProductsList] = useState([])
   const [activeIngredients, setActiveIngredients] = useState(false)
   const [activeBlank, setActiveBlank] = useState(false)
-
+  const [filterIngredientsList, setFilterIngredientsList] = useState([])
 
   useEffect(() => {
     if (searchInput.length > 1) {
@@ -21,6 +21,12 @@ const ModalFilter = ({ ...props }) => {
       setSearchCheckList([])
     }
   }, [searchInput]);
+
+  useEffect(() => {
+    if (selectedBlank.length > 0) {
+      props.setFilterList(callback.filterBlank(filterIngredientsList))
+    }
+  }, [filterIngredientsList])
 
   useEffect(() => {
     callback.filterRange(props.priceRangeValue[0], props.priceRangeValue[1])
@@ -61,7 +67,7 @@ const ModalFilter = ({ ...props }) => {
       const data = filterRangeProductsList
       // Искомые ингредиенты
       const desiredIngredients = selectedCheck;
-      console.log('ingre', selectedCheck)
+      console.log('ingre', desiredIngredients)
 
       // Пустой массив для хранения индексов элементов, содержащих искомые ингредиенты
       let matchingIndices = [];
@@ -80,9 +86,10 @@ const ModalFilter = ({ ...props }) => {
           matchingIndices.push(data[i]);
         }
       }
-      props.setFilterList([...matchingIndices])
+      return matchingIndices
+      /* props.setFilterList([...matchingIndices])
+      console.log('filterlisst1', props.filterList) */
     },
-
 
     // Фильтр по загатовкам
     filterBlank: (list) => {
@@ -90,14 +97,14 @@ const ModalFilter = ({ ...props }) => {
       const data = list
       // Искомые ингредиенты
       const desiredIngredients = selectedBlank;
-      console.log('blank', selectedBlank)
+      console.log('blank', desiredIngredients)
       // Пустой массив для хранения индексов элементов, содержащих искомые ингредиенты
-      const matchingIndices = [];
-      if (matchingIndices.length > 0) {
-        matchingIndices = []
+      const selectBlankIndex = [];
+      if (selectBlankIndex.length > 0) {
+        selectBlankIndex = []
       }
       // Выводим индексы элементов, удовлетворяющих условию
-      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", matchingIndices);
+      /* console.log("Индексы элементов, содержащих все искомые ингредиенты:", selectBlankIndex);
       console.log('desiredIngredients', selectedBlank) */
       // Проходимся по каждому элементу в исходном массиве
       for (let i = 0; i < data.length; i++) {
@@ -107,23 +114,48 @@ const ModalFilter = ({ ...props }) => {
         const blanks = blankInfo.map(blank => blank.name);
         // Проверяем, содержатся ли все искомые ингредиенты в текущем ingredientInfo
         if (desiredIngredients.every(blank => blanks.includes(blank))) {
-          matchingIndices.push(data[i]);
+          selectBlankIndex.push(data[i]);
         }
       }
-      props.setFilterList([...matchingIndices])
+      return selectBlankIndex
     },
 
     //Применить фильтрацию
     actionFilterSelected: () => {
-      if (selectedCheck.length > 0) {
-        callback.filterIngredient()
-        if (selectedBlank.length > 0 && props.filterList !== props.productsList) {
-          callback.filterBlank(props.filterList)
-        } else return
+      if (selectedCheck.length > 0 && selectedBlank.length == 0) {
+        props.setFilterList(callback.filterIngredient())
       }
-      if (selectedCheck.length === 0 && selectedBlank.length > 0) {
-        callback.filterBlank(filterRangeProductsList)
-      } else {
+      if (selectedCheck.length == 0 && selectedBlank.length > 0) {
+        props.setFilterList(callback.filterBlank(filterRangeProductsList))
+      }
+      if (selectedCheck.length > 0 && selectedBlank.length > 0) {
+        setFilterIngredientsList(callback.filterIngredient())
+        console.log('FilterIngredientsList', filterIngredientsList)
+        /* function firstFunction() {
+          return new Promise(function (resolve, reject) {
+            props.setFilterList(callback.filterIngredient)
+            console.log('1', props.filterList)
+            resolve(); // Вызовите resolve() после завершения операций в первой функции
+          });
+        }
+
+        function secondFunction() {
+          props.setFilterList(callback.filterBlank(props.filterList))
+          console.log('2', props.filterList)
+        }
+
+        firstFunction().then(function () {
+          secondFunction();
+        }); */
+        /* const first = (callbacks) => {
+          callback.filterIngredient()
+          callbacks()
+        }
+        first(function () {
+          callback.filterBlank(filterRangeProductsList)
+        }) */
+      }
+      else {
         return
       }
 
