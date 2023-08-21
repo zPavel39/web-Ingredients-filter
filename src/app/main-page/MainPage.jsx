@@ -59,6 +59,7 @@ const MainPage = () => {
             filterList={filterList}
             productsList={productsList}
             ingredientsList={ingredientsList}
+            blankList={blankList}
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}
@@ -66,7 +67,6 @@ const MainPage = () => {
             getPriceRange={callbacks.getPriceRange}
             priceRangeValue={priceRangeValue}
             setPriceRangeValue={setPriceRangeValue}
-            blankList={blankList}
           /> : ''}
         <div>
           <ListProduct filterList={filterList} />

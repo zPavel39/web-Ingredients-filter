@@ -16,23 +16,23 @@ const ListCheckbox = ({ ...props }) => {
 
     return (
         <div className='checkList'>
-            {props.searchCheckList.length === 0 && props.searchInput.length > 0 ?
+            {props.searchSelectedList.length === 0 && props.searchInput.length > 0 ?
                 <div className='checkList__noSearch'>
                     <span className='checkList__noSearch_title'>Ингредиент не найден</span>
                 </div>
                 :
-                props.searchCheckList.length > 0 ?
+                props.searchSelectedList.length > 0 ?
                     <div className='checkList__search'>
-                        {props.searchCheckList.map((i) => {
+                        {props.searchSelectedList.map((i) => {
                             return (
                                 <div className='checkList__itemSearch' key={i.id}>
                                     <input
                                         type='checkbox'
                                         id={i.id}
-                                        name={i.name}
+                                        name={`${i.name}-${i.id}`}
                                         onChange={() => callback.setSelectedCheck(i.name)}
                                         checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
-                                    <label htmlFor={i.id}>{i.name}</label>
+                                    <label htmlFor={`${i.name}-${i.id}`}>{i.name}</label>
                                 </div>
                             )
                         })}
@@ -40,16 +40,16 @@ const ListCheckbox = ({ ...props }) => {
                     :
                     <div className='checkList__itemBlock'>
                         {
-                            props.ingredientsList.map((i) => {
+                            props.selectedList.map((i) => {
                                 return (
                                     <div className='checkList__item' key={i.id}>
                                         <input
                                             type='checkbox'
-                                            id={i.id}
+                                            id={`${i.name}-${i.id}`}
                                             name={i.name}
                                             onChange={() => callback.setSelectedCheck(i.name)}
                                             checked={props.selectedCheck.filter(item => item == i.name) == i.name ? true : false} />
-                                        <label htmlFor={i.id}>{i.name}</label>
+                                        <label htmlFor={`${i.name}-${i.id}`}>{i.name}</label>
                                     </div>
                                 )
                             })}
